@@ -4,27 +4,29 @@ The Public Key Infrastructure has a design flaw. When a Certificate Authority
 revokes a certificate, that information does not always properly make it to
 TLS clients that need to validate a certificate.
 
-Certificate Revocation Lists do not scale well to the current size of the
-Internet.
+[Certificate Revocation Lists](http://en.wikipedia.org/wiki/Revocation_list)
+do not scale well to the current size of the Internet.
 
-Online Certificate Status Protocol poses privacy concerns with the ability of
+[Online Certificate Status Protocol](http://en.wikipedia.org/wiki/Online_Certificate_Status_Protocol)
+(OCSP) is a valuable solution but it poses privacy concerns with the ability of
 Certificate Authorities to track what IP addresses are requesting what IP
 addresses and have had issues with not being available consistently.
 
-OCSP Stapling helps to address the privacy concerns but it requires the server
-software run code that makes a connection to an external server not under the
-control of the system administrator, and that is a potential remote exploit
-vector if there is a flaw in the server's OCSP Stapling code and violates the
-firewall policies of some web servers. I for example can not run OCSP
-Stapling due to the potential security issues that exist.
+[OCSP Stapling](http://en.wikipedia.org/wiki/OCSP_stapling) helps to address
+the privacy concerns but it requires the server software run code that makes a
+connection to an external server not under the control of the system
+administrator, and that is a potential remote exploit vector if there is a flaw
+in the server's OCSP Stapling code and violates the firewall policies of some
+web servers. For example I can not run OCSP Stapling due to the potential
+security issues that exist.
 
 OCSP Stapling also requires the participation of the server serving the
 certificate, servers serving a revoked certificate for fraudulent purposes
 will not participate.
 
 Finally OCSP Stapling is really only a solution that works with web servers, it
-does not lend itself well to some other protocols that may be using x.509
-certificated.
+does not lend itself well to some other protocols that may be using
+[X.509](http://en.wikipedia.org/wiki/X.509) certificates.
 
 The DNS system has been shown to scale extremely well. Clients typically make a
 request to a local DNS resolver rather than to an authoritative server so the
@@ -48,7 +50,7 @@ can take plus until this becomes a reality.
 
 ## Nutshell Overview
 
-When a TLS client download a certificate signed by a participating Certificate
+When a TLS client downloads a certificate signed by a participating Certificate
 Authority, the client will be able to extract a serial number from the
 signed certificate and do a simple DNS query for a TXT record to determine if
 the certificate has been revoked or not.
@@ -59,7 +61,7 @@ network traffic needed for a client to have confidence in a certificate.
 
 By using DNSSEC to secure the zones used to provide the results, the client can
 have confidence that the result they receive has not been tampered with between
-the Certificate Authorities server and the client.
+the Certificate Authority's server and the client.
 
 By including a timestamp in the TXT data, the client can know how recently a
 valid certificate was declared to still be valid by the certificate authority.
@@ -303,7 +305,7 @@ requests. I do not know why some resolvers choose to do this but I suspect it
 is a an attempt to reduce the use of their resolver in a distributed Denial of
 Service DNS amplification attack.
 
-By using a distinct TLD for PKI Validation nameservers, some of these resolvers
+By using a distinct TLD for PKI Validation zones, some of these resolvers
 could allow TXT and DNSSEC requests for the distinct TLD while still choosing
 to block those requests on other TLDs. Of course they would also need to allow
 DNSSEC related requests to the root nameservers as well.

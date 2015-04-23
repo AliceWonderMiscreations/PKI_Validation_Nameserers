@@ -65,14 +65,14 @@ have confidence that the result they receive has not been tampered with between
 the Certificate Authority's server and the client.
 
 By including a timestamp in the TXT data, the client can know how recently a
-valid certificate was declared to still be valid by the certificate authority.
+valid certificate was declared to still be valid by the Certificate Authority.
 
 In the event that a valid response can not be obtained, clients can still fall
 back to the existing method of using the OCSP protocol to query the validity
 from the Certificate Authority.
 
 
-## Top Level Domain
+## Top Level Domain and Zone Files
 
 A new Top Level Domain should be created by ICANN to serve as a utility domain
 for PKI Validation nameservers. An easy way for TLS clients to check whether or
@@ -89,9 +89,11 @@ for example.
 The TLD should be DNSSEC secured as I believe is already required for any new
 Top Level Domains.
 
-It is my opinion that the RR types used in the CA zones should be limited to a
-subset of the current RR types. This TLD is not intended for running web sites,
-it is intended for the needs of the Public Key Infrastructure.
+It is my *opinion* that the
+[DNS RR types](http://en.wikipedia.org/wiki/List_of_DNS_record_types) used in
+the CA Validation zones should be limited to a subset of the current RR types.
+This TLD is not intended for running web sites, it is intended for the needs of
+the Public Key Infrastructure.
 
 For zone files used by the Certificate Authorities I would limit the RR types
 to SOA, NS, RP, TXT, and the RR types needed for DNSSEC.

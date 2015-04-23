@@ -24,9 +24,10 @@ OCSP Stapling also requires the participation of the server serving the
 certificate, servers serving a revoked certificate for fraudulent purposes
 will not participate.
 
-Finally OCSP Stapling is really only a solution that works with web servers, it
-does not lend itself well to some other protocols that may be using
-[X.509](http://en.wikipedia.org/wiki/X.509) certificates.
+Every server that uses [X.509](http://en.wikipedia.org/wiki/X.509) certificates
+will need code written to use them, and that is not likely to happen. A better
+solution would be a solution that allows the client to verify without needing
+modifications to the server.
 
 The DNS system has been shown to scale extremely well. Clients typically make a
 request to a local DNS resolver rather than to an authoritative server so the

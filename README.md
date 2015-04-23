@@ -25,9 +25,9 @@ certificate, servers serving a revoked certificate for fraudulent purposes
 will not participate.
 
 Every server that uses [X.509](http://en.wikipedia.org/wiki/X.509) certificates
-will need code written to use them, and that is not likely to happen. A better
-solution would be a solution that allows the client to verify without needing
-modifications to the server.
+will need code written to use OCSP stapling, and that is not likely to happen
+very quickly. A better solution would be a solution that allows the client to
+verify without needing modifications to the server.
 
 The DNS system has been shown to scale extremely well. Clients typically make a
 request to a local DNS resolver rather than to an authoritative server so the

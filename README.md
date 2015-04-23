@@ -347,8 +347,9 @@ authoritative nameservers for a PKI Validation zone, then clients may not be
 able to use this system to establish the current status of a certificate.
 
 This can be mitigated by using a sufficient number of authoritative slaves
-that are geographically spread out, and clients will still be able to use the
-OCSP protocol as a fallback.
+that are geographically spread out. Clients will still be able to use the
+OCSP protocol as a fallback if they can not get a response from the
+nameservers.
 
 
 ## Dedication

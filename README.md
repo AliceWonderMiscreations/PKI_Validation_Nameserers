@@ -101,7 +101,8 @@ conjunction with OCSP to resolve domains used with OCSP, but I would suggest
 that not be allowed.
 
 The TLD itself will obviously need other RR types, such as the A and AAAA
-records needed to create glue records for the Certificate Authority domains.
+records needed to create glue records for the Certificate Authority
+nameservers.
 
 
 ### Nameservers
@@ -116,7 +117,7 @@ different geographic continents.
 The nameservers should operate on both IPv4 and IPv6 with appropriate glue
 records.
 
-I would suggest that the authority set up nameservers around the globe that
+I would suggest that the TLD authority set up nameservers around the globe that
 can act as slaves for the Certificate Authorities masters so that each
 Certificate Authority does not have the individual cost of running their own
 slaves around the globe.
@@ -142,15 +143,15 @@ leaves the company for any reason.
 
 ### SOA Record Serial Number
 
-It is generally considered best practices to use the YYYYMMDDnn format for the
-serial number in a zone's SOA record. That format only allows a zone to updated
-every 15 minutes which may not be enough for this purpose.
+It is generally considered best practices to use the `YYYYMMDDnn` format for
+the serial number in a zone's SOA record. That format only allows a zone to
+updated every 15 minutes which may not be enough for this purpose.
 
 I would suggest that Certificate Authorities instead use seconds since UNIX
 Epoch for the serial number. The SOA serial number is an unsigned 32-bit
 integer and will accommodate seconds from epoch until we are into the 22nd
 century, at which point if the 32-bit limitation on zone serial numbers still
-exist, the SOA specification allows it wrap back to 0.
+exists, the SOA specification allows it wrap back to 0.
 
 Certificate Authorities should be aware that if they are using 32-bit systems
 to calculate the UNIX seconds since epoch, UNIX systems use a signed int for
@@ -181,7 +182,7 @@ Validation nameserver.
 ## Validation TXT Records
 
 The owner of a validation TXT record should be the serial number of the X.509
-certificate as described about.
+certificate as described above.
 
 I would suggest the TTL for the TXT records be set to 3600 seconds (one hour).
 That will allow resolvers to cache the result long enough to reduce the network
@@ -233,7 +234,7 @@ Does the certificate contain a serial number and CA validation label?
 If yes, goto Step Two. If no, goto Fallback.
 
 
-### Step Two - Request TXT record from the DNS System
+### Step Two - Request TXT record from the DNS System.
 
 Does the DNS system return a DNSSEC validating response?
 
@@ -245,12 +246,12 @@ If yes, goto Step Three. If no, goto Fallback.
 If yes, goto Step Four. If no, goto Fallback.
 
 
-### Step Four - Is RDATA valid format?
+### Step Four - Is RDATA of the Valid Format?
 
 If yes, goto Step Five. If no, goto Fallback
 
 
-### Step Five - Is Authentication Bit set to 1?
+### Step Five - Is the Status key `s` set to 1?
 
 If yes, goto Step Six. If no, HARD FAIL CERTIFICATE REJECTED.
 
@@ -276,7 +277,7 @@ the end user should be protected from a potentially revoked EV certificate in
 fraudulent MITM use.
 
 
-## Why a new TLD is needed
+## Why A New TLD Is Needed
 
 From a technical perspective, in a perfect world this system could work
 without needing a separate TLD. The real world is not perfect, a new TLD allows
@@ -287,9 +288,9 @@ at least two potential problems to be solved.
 
 This system should not be used as a replacement for OCSP as described in
 [RFC 6960](http://tools.ietf.org/html/rfc6960). Certificate Authorities who do
-not provide a mechanism for OCSP validation or certificate authorities who fail
-to update the validation bit when a certificate is revoked should have their
-ability to run a PKI Validation nameserver removed.
+not provide a mechanism for OCSP validation or Certificate Authorities who fail
+to update the status key `s` when a certificate is revoked should have their
+ability to use PKI Validation zones revoked.
 
 A TLD specific to the PKI Validation nameservers allows for proper management
 of which Certificate Authorities are allowed to use the system.
@@ -299,8 +300,8 @@ of which Certificate Authorities are allowed to use the system.
 
 Some users are behind resolvers that block requests to some types of DNS RR
 requests. I do not know why some resolvers choose to do this but I suspect it
-is a an attempt to reduce the use of their resolver in a distributed denial of
-service attack.
+is a an attempt to reduce the use of their resolver in a distributed Denial of
+Service DNS amplification attack.
 
 By using a distinct TLD for PKI Validation nameservers, some of these resolvers
 could allow TXT and DNSSEC requests for the distinct TLD while still choosing
@@ -311,7 +312,8 @@ If resolvers blocking DNS requests continues to be a problem, browsers could
 potentially even tunnel DNS requests for the .pki TLD over port 80 to a DNS
 server coded in the browser. Bypassing the clients specified resolver is not
 something browsers should do for most hostnames but it would be safe to do for
-a utility TLD when resolvers block the resources needed.
+a utility TLD *when* the configured client resolver blocks the resources
+needed.
 
 
 ## Certificate Authority Participation
@@ -331,11 +333,12 @@ If an attacker manages to steal the DNSSEC signing keys, then the attacker
 could potentially create false records that would DNSSEC validate and pull off
 a DNS cache poisoning attack.
 
-This could result in DoS attack on domains that have valid certificate or it
+This could result in DoS attack on domains that have valid a certificate or it
 could result in a revoked fraudulent certificate being accepted by a client.
 
-This threat can be mitigated by using an appropriate key rollover schedule
-and proper security procedures when handling the private signing keys.
+This threat can be mitigated by using an appropriate DNSSEC key rollover
+schedule and proper security procedures when handling the private DNSSEC
+signing keys.
 
 If an attacker manages to pull off a Denial of Service attack against the
 authoritative nameservers for a PKI Validation zone, then clients may not be

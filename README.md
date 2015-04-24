@@ -10,7 +10,7 @@ do not scale well to the current size of the Internet.
 [Online Certificate Status Protocol](http://en.wikipedia.org/wiki/Online_Certificate_Status_Protocol)
 (OCSP) is a valuable solution but it poses privacy concerns with the ability of
 Certificate Authorities to track what IP addresses are requesting what
-certificates and have had issues with not being available consistently.
+certificates and it has had issues with not being available consistently.
 
 [OCSP Stapling](http://en.wikipedia.org/wiki/OCSP_stapling) helps to address
 the privacy concerns but it requires the server software run code that makes a

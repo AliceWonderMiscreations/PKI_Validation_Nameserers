@@ -15,10 +15,12 @@ certificates and it has had issues with not being available consistently.
 [OCSP Stapling](http://en.wikipedia.org/wiki/OCSP_stapling) helps to address
 the privacy concerns but it requires the server software run code that makes a
 connection to an external server not under the control of the system
-administrator, and that is a potential remote exploit vector if there is a flaw
-in the server's OCSP Stapling code and violates the firewall policies of some
-web servers. For example I can not run OCSP Stapling due to the potential
-security issues that exist.
+administrator. 
+
+That is a potential remote exploit vector if there is a flaw in the server's OCSP
+Stapling code. It also violates the firewall policies of many web servers,
+firewall rules that exist because of the remote vulnerability issues that
+potentially exist when a server connects to external resources.
 
 OCSP Stapling also requires the participation of the server serving the
 certificate, servers serving a revoked certificate for fraudulent purposes

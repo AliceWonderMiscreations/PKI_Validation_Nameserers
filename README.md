@@ -2,15 +2,15 @@
 
 The Public Key Infrastructure has a design flaw. When a Certificate Authority
 revokes a certificate, that information does not always properly make it to
-TLS clients that need to validate a certificate.
+TLS clients that need to know if a certificate has been revoked.
 
 [Certificate Revocation Lists](http://en.wikipedia.org/wiki/Revocation_list)
 do not scale well to the current size of the Internet.
 
 [Online Certificate Status Protocol](http://en.wikipedia.org/wiki/Online_Certificate_Status_Protocol)
 (OCSP) is a valuable solution but it poses privacy concerns with the ability of
-Certificate Authorities to track what IP addresses are requesting what IP
-addresses and have had issues with not being available consistently.
+Certificate Authorities to track what IP addresses are requesting what
+certificates and have had issues with not being available consistently.
 
 [OCSP Stapling](http://en.wikipedia.org/wiki/OCSP_stapling) helps to address
 the privacy concerns but it requires the server software run code that makes a

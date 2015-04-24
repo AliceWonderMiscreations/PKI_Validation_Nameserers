@@ -44,11 +44,15 @@ This paper describes a simple yet effective method of using the DNS system to
 allow TLS clients to verify that a X.509 certificate has not been revoked by
 the certificate authority that signed it.
 
-It is my hope that *someone* with the right contacts takes not of this paper
-and that a proper RFC can be written up and put into action.
+It is my hope that *someone* with the right contacts takes note of this
+suggestion and that a proper RFC can be written up and put into action.
 
 This is being published on github in the hopes that discussion and improvements
 can take plus until this becomes a reality.
+
+This work is [CC BY 4.0](http://creativecommons.org/licenses/by/4.0/) but I am
+willing to change it to whatever it needs to be for this suggestion to actually
+be implemented.
 
 
 ## Nutshell Overview
